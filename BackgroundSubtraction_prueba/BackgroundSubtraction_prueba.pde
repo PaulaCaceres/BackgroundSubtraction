@@ -34,7 +34,7 @@ void draw() {
     
     // Diferencia entre el frame actual y el fondo almacenado
     // Límite para comparar si el cambio entre las dos imágenes es mayor a...
-    int threshold = 127;
+    int threshold = 210000000;
     int presenceSum = 0;
     
     // Para cada pixel de video de la cámara, tomar el color actual y el anterior de ese pixel
@@ -63,11 +63,22 @@ void draw() {
       // Renderizar la imagen diferente en la pantalla
       pixels[i] = color(diffR, diffG, diffB);
       
+     
+      
     }
-    //Ver los pixeles del array que cambiaron y escribir la diferencia
-    updatePixels(); 
-    println(presenceSum);
+    
+     if (presenceSum > threshold) {
+       //Ver los pixeles del array que cambiaron y escribir la diferencia
+       updatePixels();
+       println(presenceSum);
+      fill(255,255,0);
+      ellipse(200,200,200,200); 
+   } else {
+      updatePixels();
+       println(presenceSum);
    }
+   }
+   
   }
   
 
@@ -77,9 +88,4 @@ void keyPressed() {
   video.loadPixels();
   antesPixels.copy(video, 0, 0, video.width, video.height, 
         0, 0, video.width, video.height);
-  
-    if (antesPixels.pixels != video.pixels) {
-      fill(255,255,0);
-      ellipse(200,200,200,200);
-  }
 }
